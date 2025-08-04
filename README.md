@@ -8,7 +8,7 @@ Un proyecto educativo creado con HTML, CSS y JavaScript, donde se combinan lógi
 
 ## 🚀 ¿Qué es este proyecto?
 
-Es una SPA (Single Page Application) que inicia con un botón **“Empezar →”** y te lleva directamente a un **tablero lógico interactivo**, donde podés escribir comandos, mover personajes y simular acciones.
+Es una web que inicia con un botón **“Empezar →”** y te lleva directamente a un **tablero lógico interactivo**, donde podés escribir comandos, mover personajes y simular acciones.
 
 🔹 Incluye dos apartados principales:
 - **🧩 Tablero:** vista principal de juego lógico
