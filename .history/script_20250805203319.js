@@ -383,7 +383,7 @@ function convertToBinary() {
 
 
 function convertCodeBlock(code) {
-    if (!code.trim()) return '';
+    if (!code.trim()) return '';  // <-- Esta línea es nueva
     
     const lines = code.split('\n');
     const binaryLines = [];
@@ -541,13 +541,12 @@ async function executeCode() {
 
 // Función para ejecutar un bloque de código
 async function executeCodeBlock(code, isMain = false) {
-    if (!code.trim()) return true;
+    if (!code.trim()) return true;  // <-- Validación para evitar procesar código vacío
     
     const lines = code.split('\n').filter(line => line.trim());
     let returnCalled = false;
-    let i = 0;
     
-    while (i < lines.length) {
+    for (let i = 0; i < lines.length; i++) {
         const command = lines[i].trim();
         
         // Si se encontró un return, salir de la subrutina
@@ -580,70 +579,25 @@ async function executeCodeBlock(code, isMain = false) {
         else if (command === 'return') {
             if (!isMain) {
                 returnCalled = true;
-                i++;
                 continue;
             }
-        }
-        // Manejar bloque hacer
-        else if (command.startsWith('hacer(')) {
-            const n = parseInt(command.match(/hacer\((\d+)\)/)?.[1]);
-            if (isNaN(n) || n < 1) {
-                showError(`Número inválido en hacer: ${command}`);
-                return false;
-            }
-
-            // Encontrar el finhacer correspondiente
-            let endIndex = i + 1;
-            let depth = 1;
-            while (endIndex < lines.length && depth > 0) {
-                const nextCommand = lines[endIndex].trim();
-                if (nextCommand.startsWith('hacer(')) {
-                    depth++;
-                } else if (nextCommand === 'finhacer') {
-                    depth--;
-                }
-                endIndex++;
-            }
-
-            if (depth > 0) {
-                showError(`No se encontró 'finhacer' para el bloque 'hacer' en la línea ${i+1}`);
-                return false;
-            }
-
-            // Extraer el bloque a repetir
-            const blockLines = lines.slice(i + 1, endIndex - 1);
-            
-            // Ejecutar el bloque n veces
-            for (let rep = 0; rep < n; rep++) {
-                for (let j = 0; j < blockLines.length; j++) {
-                    const blockCommand = blockLines[j].trim();
-                    if (blockCommand) {
-                        const success = await executeCommand(blockCommand);
-                        if (!success) return false;
-                        await new Promise(resolve => setTimeout(resolve, executionSpeed));
-                    }
-                }
-            }
-
-            // Saltar al final del bloque
-            i = endIndex;
-            continue;
         }
         // Ejecutar otros comandos
         else {
             const success = await executeCommand(command);
             if (!success) {
+                // Si hay un error, detener la ejecución
                 return false;
             }
         }
         
-        i++;
         // Esperar según la velocidad configurada
         await new Promise(resolve => setTimeout(resolve, executionSpeed));
     }
     
     return true;
 }
+
 
 // Función para ejecutar un comando
 async function executeCommand(command) {
@@ -862,25 +816,4 @@ document.querySelector('.theme-toggle').addEventListener('click', function() {
   document.body.classList.toggle('light-theme');
   this.querySelector('i').classList.toggle('fa-sun');
   this.querySelector('i').classList.toggle('fa-moon');
-});
-
-// Inicialización
-document.addEventListener('DOMContentLoaded', function() {
-    // Generar el tablero inicial
-    generateBoard(8);
-    
-    // Configurar eventos del tablero
-    setupBoardEvents();
-    
-    // Evento para la pestaña de Juegos
-    document.getElementById('gamesTab').addEventListener('click', function() {
-        // Animación de transición
-        document.querySelector('.main-container').classList.add('fade-out');
-        setTimeout(function() {
-            window.location.href = 'tablero-juegos.html';
-        }, 500);
-    });
-    
-    // Configurar eventos de programación
-    setupProgrammingEvents();
 });

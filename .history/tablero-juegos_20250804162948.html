@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tablero 2do - Inicio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Tablero 2do - Modo Juegos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
     <style>
         :root {
             --bg-primary: #0f172a;
@@ -140,17 +138,6 @@
             color: var(--text-secondary);
         }
 
-        .info-text {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            opacity: 0;
-            animation: fadeIn 0.8s forwards 0.6s;
-            margin-bottom: 50px;
-            line-height: 1.8;
-            text-align: center;
-        }
-
-
         .features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -257,6 +244,30 @@
             }
         }
 
+        .game-preview {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: rgba(51, 65, 85, 0.3);
+            border-radius: var(--border-radius);
+            margin: 40px 0;
+            border: 2px dashed var(--accent-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.8s forwards 0.7s;
+        }
+
+        .game-preview::after {
+            content: "⚙️ EN CONSTRUCCIÓN ⚙️";
+            font-size: 2rem;
+            color: var(--accent-secondary);
+            position: absolute;
+            animation: pulse 2s infinite;
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 0.5; transform: scale(0.95); }
             50% { opacity: 1; transform: scale(1); }
@@ -273,53 +284,68 @@
             border-top: 1px solid rgba(124, 58, 237, 0.2);
         }
     </style>
+</head>
 <body>
+    <header>
+        <div class="tabs">
+            <div class="tab" id="boardTab">
+                <i class="fas fa-table"></i> Tablero
+            </div>
+            <div class="tab active">
+                <i class="fas fa-gamepad"></i> Juegos
+            </div>
+        </div>
+    </header>
+    
     <div class="container">
         <div class="hero">
-            <h1 class="title">Tablero 2do</h1>
-            <p class="subtitle">¡Importante!: Debo aclarar que hay errores, y bastantes, estos seran corregidos en el futuro, esta version es solamente para presenciar como empezo este trabajo.</p>
-            <p class="subtitle">Una aplicación educativa para crear y programar tableros interactivos. Diseña tu entorno con personajes y objetos, y programa sus comportamientos mediante comandos simples.</p>
-            <div class="info-text">
-                <p>Colegio: Adolfo Bioy Casares</p>
-                <p>Materia: Tecnología 2do Año</p>
-                <p>Profesor: Emanuel Alejandro Paniale</p>
-                <p>Alumno: Fabrizio Piovano</p>
+            <h1 class="title">Próximamente :(</h1>
+            <p class="subtitle">Estoy trabajando en terminar el modo de juegos.</p>
+            
+            <div class="game-preview"></div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h3>Juegos con robotitos :D</h3>
+                    <p>Va a estar Elias el robotito para poder juntar tuercas, tornillos, etc...</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Quizas mas adelante se puedan crear comandos personalizados...</h3>
+                    <p>¡No lo prometo eh!</p>
+                </div>
             </div>
-
+            
             <button id="startBtn" class="start-btn">
-                <i class="fas fa-play"></i> Empezar →
+                <i class="fas fa-arrow-left"></i> Volver al Tablero
             </button>
         </div>
-
-        <div class="game-preview"></div>
-            
-        <div class="features">
-            <div class="feature">
-                <i class="fas fa-puzzle-piece"></i>
-                <h3>Tablero con muchos elementos para usar.</h3>
-                <p>Podes usar los elementos que usamos en clase con todos los comandos.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-trophy"></i>
-                <h3>Tablero de Juegos</h3>
-                <p>Mas adelante va a haber un tablero para hacer juegos como en clase.</p>
-            </div>
-        </div>
     </div>
+    
+    <footer>
+        Hecho por Sonest Tecs. Arg. y su pagina Web: https://sonest.netlify.app/ --- Proyecto Educativo Tablero 2do
+    </footer>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const startBtn = document.getElementById('startBtn');
+            const boardTab = document.getElementById('boardTab');
             
-            startBtn.addEventListener('click', function() {
-                // Animación de salida
+            // Animación de salida y redirección
+            function redirectToBoard() {
                 document.querySelector('.hero').classList.add('fade-out');
                 
-                // Redirigir después de la animación
                 setTimeout(function() {
                     window.location.href = 'tablero-normal.html';
                 }, 800);
-            });
+            }
+            
+            // Evento para el botón de volver
+            startBtn.addEventListener('click', redirectToBoard);
+            
+            // Evento para la pestaña de Tablero
+            boardTab.addEventListener('click', redirectToBoard);
         });
     </script>
 </body>

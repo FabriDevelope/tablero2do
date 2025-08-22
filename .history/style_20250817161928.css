@@ -218,7 +218,7 @@ header {
 }
 
 .sidebar {
-    width: 525px; 
+    width: 450px; 
     max-width: 100%;
     flex-wrap: wrap;
     background: rgba(30, 41, 59, 0.85);
